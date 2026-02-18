@@ -20,43 +20,16 @@ class Controller extends BaseController
 
     public function calcularDuracionOxigeno(Request $request)
     {
-        dump(request()->all());
-        switch ($request->input('tipoCilindro')) {
-            case 'D':
-                $constante = 0.16;
-                break;
-            case 'E':
-                $constante = 0.26;
-                break;
-            case 'M':
-                $constante = 1.56;
-                break;
-        }
-        $duracion = ( ($request->input('presion') - 200 ) * $constante ) / $request->input('flujo');
-        dump("Duración: " .$this->minutosAHoras($duracion) . " horas");
-        //return view('index');
+        //dump(request()->all());
+        $presion = $request->input('presion');
+        $tipoCilindro = $request->input('tipoCilindro');
+        $flujo = $request->input('flujo');
 
-        $cte = 4;
-        $peso = 95; // Peso del paciente en kg
-        $SCTQ = 64;
+        $duracion = ( ($presion - 200 ) * $tipoCilindro ) / $flujo;
 
+        $duracion = $this->minutosAHoras($duracion) . " horas";
 
-        dump("Peso: " . $peso . " Kgs");
-
-        dump("Superficie corporal total quemada: " . $SCTQ . " %");
-
-        $volumen24 = $cte * $peso * $SCTQ;
-        dump("Volumen: " . $volumen24 . " ml en 24 horas");
-        $volumen8 = $volumen24 * 0.50;
-        dump("Volumen: " . $volumen8 . " ml en 8 horas");
-        $volumen1 = $volumen8 / 8;
-        dump("Volumen: " . $volumen1 . " ml en 1 hora");
-        $volumen1min = $volumen1 / 60;
-        dump("Volumen: " . $volumen1min . " ml en 1 minuto");
-        $volumenNormogotero = $volumen1min * 20;
-        dump("Volumen: " . $volumenNormogotero . " gotas por minuto");
-
-
+        return view('index', compact('duracion','presion','tipoCilindro','flujo'));
     }
 
     private function minutosAHoras($minutos)
@@ -65,6 +38,40 @@ class Controller extends BaseController
         $min = $minutos % 60;
 
         return sprintf('%02d:%02d', $horas, $min);
+    }
+    
+    public function calcularReposicionLiquidos(Request $request)
+    {
+
+        $cte = 4;
+        $peso = $request->peso;
+        //$SCTQ = 64;
+
+        if ($request->sctq != null) {
+            $SCTQ = $request->sctq;
+        } else {
+            $SCTQ = $request->cabeza + $request->torax + $request->brazos + $request->piernas + $request->manos + $request->pies + $request->genitales;
+        }
+
+
+        //dump("Peso: " . $peso . " Kgs");
+
+        //dump("Superficie corporal total quemada: " . $SCTQ . " %");
+
+        $volumen24 = $cte * $peso * $SCTQ;
+        //dump("Volumen: " . $volumen24 . " ml en 24 horas");
+        $volumen8 = $volumen24 * 0.50;
+        //dump("Volumen: " . $volumen8 . " ml en 8 horas");
+        $volumen1 = $volumen8 / 8;
+        //dump("Volumen: " . $volumen1 . " ml en 1 hora");
+        $volumen1min = $volumen1 / 60;
+        //dump("Volumen: " . $volumen1min . " ml en 1 minuto");
+        $volumenNormogotero = $volumen1min * 20;
+        //dump("Volumen: " . $volumenNormogotero . " gotas por minuto");
+
+        return view('index', compact('peso', 'SCTQ', 'volumen24','volumen8','volumen1','volumen1min','volumenNormogotero'));
+
+
     }    
 
 }
