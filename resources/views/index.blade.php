@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Calculadora Médica</title>
+        <title>Calculadora TAMP</title>
         
         <!-- Bootstrap 5 CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -16,7 +16,7 @@
             }
             
             body {
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
                 min-height: 100vh;
                 padding: 2rem 0;
             }
@@ -42,10 +42,14 @@
                 margin-top: 2.5rem;
                 margin-bottom: 1.5rem;
                 font-size: 1.4rem;
-                border-bottom: 3px solid #667eea;
+                border-bottom: 3px solid #3b82f6;
                 padding-bottom: 0.8rem;
             }
             
+            .section-results {
+                color: #043a90;
+            }
+
             .form-label {
                 color: #333;
                 font-weight: 600;
@@ -62,12 +66,12 @@
             }
             
             .form-control:focus, .form-select:focus {
-                border-color: #667eea;
-                box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+                border-color: #3b82f6;
+                box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
             }
             
             .btn-calculate {
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
                 border: none;
                 color: white;
                 font-weight: 600;
@@ -79,10 +83,10 @@
             }
             
             .btn-calculate:hover {
-                background: linear-gradient(135deg, #5568d3 0%, #653a91 100%);
+                background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
                 color: white;
                 transform: translateY(-2px);
-                box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+                box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
             }
             
             .form-group {
@@ -107,7 +111,7 @@
             
             .radio-option:hover {
                 background-color: #f8f9ff;
-                border-color: #667eea;
+                border-color: #3b82f6;
             }
             
             .radio-option input[type="radio"] {
@@ -129,7 +133,7 @@
                 background: #f8f9fa;
                 padding: 2rem;
                 border-radius: 10px;
-                border-left: 4px solid #667eea;
+                border-left: 4px solid #3b82f6;
             }
             
             .row {
@@ -166,6 +170,50 @@
                 background:#f9fafc;
             }            
             
+            /* Navbar Styles */
+            .navbar-custom {
+                background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%) !important;
+                box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+                position: sticky;
+                top: 0;
+                z-index: 999;
+            }
+
+            .navbar-custom .navbar-brand {
+                font-weight: 700;
+                font-size: 1.5rem;
+                color: white !important;
+                margin-right: 2rem;
+            }
+
+            .navbar-custom .nav-link {
+                color: white !important;
+                font-weight: 600;
+                margin: 0 1rem;
+                position: relative;
+                transition: all 0.3s ease;
+                font-size: 1rem;
+            }
+
+            .navbar-custom .nav-link::after {
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: white;
+                transition: width 0.3s ease;
+            }
+
+            .navbar-custom .nav-link:hover::after {
+                width: 100%;
+            }
+
+            .navbar-custom .nav-link:hover {
+                transform: translateY(-2px);
+            }
+
             @media (max-width: 768px) {
                 .container-main {
                     padding: 1.5rem;
@@ -178,15 +226,46 @@
                 .section-title {
                     font-size: 1.1rem;
                 }
+
+                .section-results {
+                    color: #1e40af;
+                }  
+
+                .navbar-custom .nav-link {
+                    margin: 0.5rem 0;
+                    padding-left: 1rem !important;
+                }
             }
         </style>
     </head>
     <body>
+        <!-- Navbar Menu -->
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            <div class="container-fluid">
+                <span class="navbar-brand">
+                    <i class="fas fa-calculator"></i> Calculadora TAMP
+                </span>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#duracionOxigeno">Duración Tanque de Oxígeno</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#reposicionLiquidos">Reposición de Líquidos en Quemaduras</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
         <div class="container mt-5 mb-5">
             <div class="container-main">
                 
                 <!-- Primera Sección: Duración Tanque Oxígeno -->
-                <div class="form-section">
+                <div class="form-section" id="duracionOxigeno">
                     <h2 class="section-title">
                         Duración Tanque de Oxígeno
                     </h2>
@@ -197,7 +276,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="presion" class="form-label">Presión (PSI)</label>
+                                    <label for="presion" class="form-label">Presión (PSI)*</label>
                                     <input type="number" name="presion" id="presion" class="form-control" placeholder="Ej: 2000" required>
                                 </div>
                             </div>
@@ -205,31 +284,31 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-label mb-3"><strong>Tipo de cilindro</strong></label>
+                                <label class="form-label mb-3"><strong>Tipo de cilindro*</strong></label>
                                 <div class="radio-group">
                                     <div class="radio-option">
                                         <input type="radio" name="tipoCilindro" id="tipoCilindro1" value="0.16">
-                                        <label for="tipoCilindro1">D (0.16)</label>
+                                        <label for="tipoCilindro1">D (Cte 0.16) +</label>
                                     </div>
                                     <div class="radio-option">
                                         <input type="radio" name="tipoCilindro" id="tipoCilindro2" value="0.28">
-                                        <label for="tipoCilindro2">Jumbo D (0.28)</label>
+                                        <label for="tipoCilindro2">Jumbo D (Cte 0.28)</label>
                                     </div>
                                     <div class="radio-option">
                                         <input type="radio" name="tipoCilindro" id="tipoCilindro3" value="0.26">
-                                        <label for="tipoCilindro3">E (0.26)</label>
+                                        <label for="tipoCilindro3">E (Cte 0.26) +</label>
                                     </div>                                                                        
                                     <div class="radio-option">
                                         <input type="radio" name="tipoCilindro" id="tipoCilindro4" value="2.41">
-                                        <label for="tipoCilindro4">G (2.41)</label>
+                                        <label for="tipoCilindro4">G (Cte 2.41)</label>
                                     </div>
                                     <div class="radio-option">
                                         <input type="radio" name="tipoCilindro" id="tipoCilindro5" value="3.14">
-                                        <label for="tipoCilindro5">H/K (3.14)</label>
+                                        <label for="tipoCilindro5">H/K (Cte 3.14)</label>
                                     </div>
                                     <div class="radio-option">
                                         <input type="radio" name="tipoCilindro" id="tipoCilindro6" value="1.56">
-                                        <label for="tipoCilindro6">M (1.56)</label>
+                                        <label for="tipoCilindro6">M (Cte 1.56) +</label>
                                     </div>                                                                        
                                 </div>
                             </div>
@@ -237,39 +316,39 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-label mb-3"><strong>Flujo</strong></label>
+                                <label class="form-label mb-3"><strong>Flujo (Litros por minuto)*</strong></label>
                                 <div class="radio-group">
                                     <div class="radio-option">
                                         <input type="radio" name="flujo" id="flujo1" value="1">
-                                        <label for="flujo1">1 - Puntas nasales - 21-24%</label>
+                                        <label for="flujo1">1 L/min - Puntas nasales - 21-24% oxígeno</label>
                                     </div>
                                     <div class="radio-option">
                                         <input type="radio" name="flujo" id="flujo2" value="2">
-                                        <label for="flujo2">2 - Puntas nasales - 25-28%</label>
+                                        <label for="flujo2">2 L/min - Puntas nasales - 25-28% oxígeno</label>
                                     </div>
                                     <div class="radio-option">
                                         <input type="radio" name="flujo" id="flujo3" value="3">
-                                        <label for="flujo3">3 - Puntas nasales - 29-32%</label>
+                                        <label for="flujo3">3 L/min - Puntas nasales - 29-32%</label>
                                     </div>
                                     <div class="radio-option">
                                         <input type="radio" name="flujo" id="flujo4" value="4">
-                                        <label for="flujo4">4 - Puntas nasales - 23-36%</label>
+                                        <label for="flujo4">4 L/min - Puntas nasales - 23-36% oxígeno</label>
                                     </div>
                                     <div class="radio-option">
                                         <input type="radio" name="flujo" id="flujo5" value="5">
-                                        <label for="flujo5">5 - Puntas nasales - 37-40%</label>
+                                        <label for="flujo5">5 L/min - Puntas nasales - 37-40% oxígeno</label>
                                     </div>
                                     <div class="radio-option">
                                         <input type="radio" name="flujo" id="flujo6" value="6">
-                                        <label for="flujo6">6 - Puntas nasales - 41-44%</label>
+                                        <label for="flujo6">6 L/min - Puntas nasales - 41-44% oxígeno</label>
                                     </div>
                                     <div class="radio-option">
                                         <input type="radio" name="flujo" id="flujo10" value="10">
-                                        <label for="flujo10">6-10 - Mascarilla facial de oxígeno simple - 60%</label>
+                                        <label for="flujo10">6-10 L/min - Mascarilla facial de oxígeno simple - 60% oxígeno</label>
                                     </div>
                                     <div class="radio-option">
                                         <input type="radio" name="flujo" id="flujo15" value="15">
-                                        <label for="flujo15">10-15 - Mascarilla facial de oxígeno con bolsa reservorio - 80%</label>
+                                        <label for="flujo15">10-15 L/min - Mascarilla facial de oxígeno con bolsa reservorio - 80% oxígeno</label>
                                     </div>                                                                                                            
                                 </div>
                             </div>
@@ -279,31 +358,44 @@
                             Calcular Duración
                         </button>
 
-                        <br/><br/>
+                        <br/>
+                        <a id="resultadosDO"></a>                        
+                        <br/>
+                        <hr/>
+
+                        <h3 class="section-results">Resultados Duración Tanque de Oxígeno</h3>
+
+                        <h5>Duración = ( (Presión - 200) x Tipo de cilindro ) / Flujo</h5>
 
                         <table>
                             <tr>
                                 <th>Presión</th>
-                                <td>{{$presion ?? ''}}</td>
+                                <td>{{$presion ?? ''}} PSI</td>
                             </tr>
                             <tr>
-                                <th>Tipo de cilindro (constante)</th>
-                                <td>{{$tipoCilindro ?? ''}}</td>
+                                <th>Tipo de cilindro</th>
+                                <td>{{$letraTipoCilindro ?? ''}} ({{$tipoCilindro ?? ''}})</td>
                             </tr>
                             <tr>
                                 <th>Flujo</th>
-                                <td>{{$flujo ?? ''}}</td>
+                                <td>{{$dispositivoFlujo ?? ''}}</td>
                             </tr>
                             <tr>
                                 <th>Duración</th>
-                                <td>{{$duracion ?? ''}}</td>
+                                <td>{{$duracion ?? ''}} hora(s)</td>
                             </tr>                            
                         </table>
+
+                        @if(isset($presion) && isset($duracion))
+                            <script>
+                                window.location.hash = 'resultadosDO';
+                            </script>
+                        @endif
                     </form>
                 </div>
 
                 <!-- Segunda Sección: Reposición de Líquidos -->
-                <div class="form-section" style="margin-top: 2rem;">
+                <div class="form-section" style="margin-top: 2rem;" id="reposicionLiquidos">
                     <h2 class="section-title">
                         Reposición de Líquidos en Quemaduras
                     </h2>
@@ -315,13 +407,13 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="peso" class="form-label">Peso (kg)</label>
+                                    <label for="peso" class="form-label">Peso (kg)*</label>
                                     <input type="number" name="peso" id="peso" class="form-control" placeholder="Ej: 95" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="peso" class="form-label">SCTQ (%)</label>
+                                    <label for="peso" class="form-label">SCTQ (%)*</label>
                                     <input type="number" name="sctq" id="sctq" class="form-control" placeholder="Ej: 64">
                                 </div>
                             </div>                                
@@ -475,42 +567,54 @@
                         </div>
 
                         <button type="submit" class="btn btn-calculate" name="calcularRL" id="calcularRL">
-                            Calcular Reposición
+                            Calcular Reposición (Fórmula de Parkland)
                         </button>
 
-                        <br/><br/>
+                        <br/>
+                        <a id="resultadosRL"></a>                        
+                        <br/>
+                        <hr/>
+
+                        <h3 class="section-results">Resultados Reposición de Líquidos en Quemaduras</h3>
+
+                        <h5>Fórmula de Parkland: Volumen (ml) = 4 ml x peso (kg) x SCTQ (%)</h5>
 
                         <table>
                             <tr>
                                 <th>Peso</th>
-                                <td>{{$peso ?? ''}}</td>
+                                <td>{{$peso ?? ''}} Kg</td>
                             </tr>
                             <tr>
-                                <th>SCTQ</th>
-                                <td>{{$SCTQ ?? ''}}</td>
+                                <th>SCTQ (Superficie Corporal Total Quemada)</th>
+                                <td>{{$SCTQ ?? ''}} %</td>
                             </tr>
                             <tr>
                                 <th>Volumen 24 horas</th>
-                                <td>{{$volumen24 ?? ''}}</td>
+                                <td>{{$volumen24F ?? ''}} ml en 24 horas</td>
                             </tr>
                             <tr>
                                 <th>Volumen 8 horas</th>
-                                <td>{{$volumen8 ?? ''}}</td>
+                                <td>{{$volumen8F ?? ''}} ml en 8 horas</td>
                             </tr>
                             <tr>
                                 <th>Volumen 1 hora</th>
-                                <td>{{$volumen1 ?? ''}}</td>
+                                <td>{{$volumen1F ?? ''}} ml en 1 hora</td>
                             </tr>
                             <tr>
                                 <th>Volumen 1 minuto</th>
-                                <td>{{$volumen1min ?? ''}}</td>
+                                <td>{{$volumen1minF ?? ''}} ml en 1 minuto</td>
                             </tr>
                             <tr>
                                 <th>Volumen Normogotero</th>
-                                <td>{{$volumenNormogotero ?? ''}}</td>
+                                <td>{{$volumenNormogoteroF ?? ''}} gotas por minuto</td>
                             </tr>                                                        
                         </table>
 
+                        @if(isset($peso) && isset($volumen24F))
+                            <script>
+                                window.location.hash = 'resultadosRL';
+                            </script>
+                        @endif
 
                     </form>
                 </div>

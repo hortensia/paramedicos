@@ -25,11 +25,63 @@ class Controller extends BaseController
         $tipoCilindro = $request->input('tipoCilindro');
         $flujo = $request->input('flujo');
 
+        switch ($tipoCilindro) {
+            case '0.16':
+                $letraTipoCilindro = 'D';
+                break;
+            case '0.28':
+                $letraTipoCilindro = 'Jumbo D';
+                break;
+            case '0.26':
+                $letraTipoCilindro = 'E';
+                break;
+            case '2.41':
+                $letraTipoCilindro = 'G';
+                break;                              
+            case '3.14':
+                $letraTipoCilindro = 'H/K';
+                break;
+            case '1.56':
+                $letraTipoCilindro = 'M';
+                break;
+            default:
+                $letraTipoCilindro = 'Desconocido'; // Valor por defecto en caso de entrada no válida
+        }
+
+        switch ($flujo) {
+            case '1':
+                $dispositivoFlujo = '1 L/min - Puntas nasales - 21-24% oxígeno';
+                break;
+            case '2':
+                $dispositivoFlujo = '2 L/min - Puntas nasales - 25-28% oxígeno';
+                break;
+            case '3':
+                $dispositivoFlujo = '3 L/min - Puntas nasales - 29-32% oxígeno';
+                break;
+            case '4':
+                $dispositivoFlujo = '4 L/min - Puntas nasales - 23-36% oxígeno';
+                break;
+            case '5':
+                $dispositivoFlujo = '5 L/min - Puntas nasales - 37-40% oxígeno';
+                break;
+            case '6':
+                $dispositivoFlujo = '6 L/min - Puntas nasales - 41-44% oxígeno';
+                break;
+            case '10':
+                $dispositivoFlujo = '6-10 L/min - Mascarilla facial de oxígeno simple - 60% oxígeno';
+                break;
+            case '15':
+                $dispositivoFlujo = '10-15 L/min - Mascarilla facial de oxígeno con bolsa reservorio - 80% oxígeno';
+                break;
+            default:
+                $dispositivoFlujo = 'Desconocido';
+        }
+
         $duracion = ( ($presion - 200 ) * $tipoCilindro ) / $flujo;
 
-        $duracion = $this->minutosAHoras($duracion) . " horas";
+        $duracion = $this->minutosAHoras($duracion);
 
-        return view('index', compact('duracion','presion','tipoCilindro','flujo'));
+        return view('index', compact('duracion','presion', 'letraTipoCilindro', 'tipoCilindro', 'flujo', 'dispositivoFlujo'));
     }
 
     private function minutosAHoras($minutos)
@@ -43,7 +95,8 @@ class Controller extends BaseController
     public function calcularReposicionLiquidos(Request $request)
     {
 
-        $cte = 4;
+        $cte = 4; // Parkland: 4 ml por kg por % de SCTQ
+
         $peso = $request->peso;
         //$SCTQ = 64;
 
@@ -53,24 +106,18 @@ class Controller extends BaseController
             $SCTQ = $request->cabeza + $request->torax + $request->brazos + $request->piernas + $request->manos + $request->pies + $request->genitales;
         }
 
-
-        //dump("Peso: " . $peso . " Kgs");
-
-        //dump("Superficie corporal total quemada: " . $SCTQ . " %");
-
         $volumen24 = $cte * $peso * $SCTQ;
-        //dump("Volumen: " . $volumen24 . " ml en 24 horas");
+        $volumen24F = number_format($volumen24, 0, '.', ',');
         $volumen8 = $volumen24 * 0.50;
-        //dump("Volumen: " . $volumen8 . " ml en 8 horas");
+        $volumen8F = number_format($volumen8, 0, '.', ',');        
         $volumen1 = $volumen8 / 8;
-        //dump("Volumen: " . $volumen1 . " ml en 1 hora");
+        $volumen1F = number_format($volumen1, 0, '.', ',');
         $volumen1min = $volumen1 / 60;
-        //dump("Volumen: " . $volumen1min . " ml en 1 minuto");
+        $volumen1minF = number_format($volumen1min, 2, '.', ',');
         $volumenNormogotero = $volumen1min * 20;
-        //dump("Volumen: " . $volumenNormogotero . " gotas por minuto");
+        $volumenNormogoteroF = number_format($volumenNormogotero, 2, '.', ',');
 
-        return view('index', compact('peso', 'SCTQ', 'volumen24','volumen8','volumen1','volumen1min','volumenNormogotero'));
-
+        return view('index', compact('peso', 'SCTQ', 'volumen24F','volumen8F','volumen1F','volumen1minF','volumenNormogoteroF'));
 
     }    
 
