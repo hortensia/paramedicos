@@ -26,3 +26,7 @@ Route::get('/', [Controller::class, 'index']);
 Route::post('/calcularDuracionOxigeno', [Controller::class, 'calcularDuracionOxigeno'])->name('calcularDuracionOxigeno');
 
 Route::post('/calcularReposicionLiquidos', [Controller::class, 'calcularReposicionLiquidos'])->name('calcularReposicionLiquidos');
+
+Route::post('/calcularGlasgow', [Controller::class, 'calcularGlasgow'])->name('calcularGlasgow');
+
+Route::post('/calcularPAM', [Controller::class, 'calcularPAM'])->name('calcularPAM');

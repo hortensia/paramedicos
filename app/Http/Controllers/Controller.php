@@ -18,9 +18,9 @@ class Controller extends BaseController
         return view('index');
     }
 
-    public function calcularDuracionOxigeno(Request $request)
+    public function calcularDuracionOxigeno (Request $request)
     {
-        //dump(request()->all());
+
         $presion = $request->input('presion');
         $tipoCilindro = $request->input('tipoCilindro');
         $flujo = $request->input('flujo');
@@ -84,7 +84,7 @@ class Controller extends BaseController
         return view('index', compact('duracion','presion', 'letraTipoCilindro', 'tipoCilindro', 'flujo', 'dispositivoFlujo'));
     }
 
-    private function minutosAHoras($minutos)
+    private function minutosAHoras ($minutos)
     {
         $horas = floor($minutos / 60);
         $min = $minutos % 60;
@@ -92,13 +92,12 @@ class Controller extends BaseController
         return sprintf('%02d:%02d', $horas, $min);
     }
     
-    public function calcularReposicionLiquidos(Request $request)
+    public function calcularReposicionLiquidos (Request $request)
     {
 
         $cte = 4; // Parkland: 4 ml por kg por % de SCTQ
 
         $peso = $request->peso;
-        //$SCTQ = 64;
 
         if ($request->sctq != null) {
             $SCTQ = $request->sctq;
@@ -119,6 +118,32 @@ class Controller extends BaseController
 
         return view('index', compact('peso', 'SCTQ', 'volumen24F','volumen8F','volumen1F','volumen1minF','volumenNormogoteroF'));
 
+    }
+    
+    
+    public function calcularGlasgow (Request $request)
+    {
+
+        $respuestaOcular = $request->respuestaOcular;
+        $respuestaVerbal = $request->respuestaVerbal;
+        $respuestaMotora = $request->respuestaMotora;
+
+        $totalGlasgow = $respuestaOcular + $respuestaVerbal + $respuestaMotora;
+
+        return view('index', compact('respuestaOcular', 'respuestaVerbal', 'respuestaMotora', 'totalGlasgow'));
+
+    }
+    
+    public function calcularPAM (Request $request)
+    {
+
+        $sistole = $request->sistole;
+        $diastole = $request->diastole;
+
+        $pam = ( $sistole + (2 * $diastole)) / 3;
+        $pam = number_format($pam, 0, '.', ',');
+
+        return view('index', compact('sistole', 'diastole', 'pam'));
     }    
 
 }

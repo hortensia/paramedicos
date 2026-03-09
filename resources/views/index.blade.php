@@ -240,7 +240,7 @@
     </head>
     <body>
         <!-- Navbar Menu -->
-        <nav class="navbar navbar-expand-lg navbar-custom">
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
             <div class="container-fluid">
                 <span class="navbar-brand">
                     <i class="fas fa-calculator"></i> Calculadora TAMP
@@ -256,6 +256,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#reposicionLiquidos">Reposición de Líquidos en Quemaduras</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#glasgow">Escala de Glasgow</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#pam">Presión Arterial Media</a>
+                        </li>                        
                     </ul>
                 </div>
             </div>
@@ -382,7 +388,7 @@
                             </tr>
                             <tr>
                                 <th>Duración</th>
-                                <td>{{$duracion ?? ''}} hora(s)</td>
+                                <td><b>{{$duracion ?? ''}} hora(s)</b></td>
                             </tr>                            
                         </table>
 
@@ -393,6 +399,8 @@
                         @endif
                     </form>
                 </div>
+
+                <br/>
 
                 <!-- Segunda Sección: Reposición de Líquidos -->
                 <div class="form-section" style="margin-top: 2rem;" id="reposicionLiquidos">
@@ -618,6 +626,206 @@
 
                     </form>
                 </div>
+
+                <br/>
+
+                <!-- Tercera Sección: Glasgow -->
+                <div class="form-section" id="glasgow">
+                    <h2 class="section-title">
+                        Escala de Glasgow
+                    </h2>
+
+                    <form method="POST" action="{{ route('calcularGlasgow') }}" id="formGlasgow">
+                        @csrf
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label mb-3"><strong>Respuesta ocular*</strong></label>
+                                <div class="radio-group">
+                                    <div class="radio-option">
+                                        <input type="radio" name="respuestaOcular" id="respuestaOcular1" value="4">
+                                        <label for="respuestaOcular1">4 - Espontánea</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" name="respuestaOcular" id="respuestaOcular2" value="3">
+                                        <label for="respuestaOcular2">3 - Estímulo verbal</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" name="respuestaOcular" id="respuestaOcular3" value="2">
+                                        <label for="respuestaOcular3">2 - Estímulo doloroso</label>
+                                    </div>                                                                        
+                                    <div class="radio-option">
+                                        <input type="radio" name="respuestaOcular" id="respuestaOcular4" value="1">
+                                        <label for="respuestaOcular4">1 - No responde</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label mb-3"><strong>Respuesta verbal*</strong></label>
+                                <div class="radio-group">
+                                    <div class="radio-option">
+                                        <input type="radio" name="respuestaVerbal" id="respuestaVerbal1" value="5">
+                                        <label for="respuestaVerbal1">5 - Orientado</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" name="respuestaVerbal" id="respuestaVerbal2" value="4">
+                                        <label for="respuestaVerbal2">4 - Confundido</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" name="respuestaVerbal" id="respuestaVerbal3" value="3">
+                                        <label for="respuestaVerbal3">3 - Palabras inadecuadas</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" name="respuestaVerbal" id="respuestaVerbal4" value="2">
+                                        <label for="respuestaVerbal4">2 - Palabras incomprensibles</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" name="respuestaVerbal" id="respuestaVerbal5" value="1">
+                                        <label for="respuestaVerbal5">1 - No responde</label>
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>                        
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label mb-3"><strong>Respuesta motora*</strong></label>
+                                <div class="radio-group">
+                                    <div class="radio-option">
+                                        <input type="radio" name="respuestaMotora" id="respuestaMotora1" value="6">
+                                        <label for="respuestaMotora1">6 - Obedece órdenes</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" name="respuestaMotora" id="respuestaMotora2" value="5">
+                                        <label for="respuestaMotora2">5 - Localiza dolor</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" name="respuestaMotora" id="respuestaMotora3" value="4">
+                                        <label for="respuestaMotora3">4 - Retirada al dolor</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" name="respuestaMotora" id="respuestaMotora4" value="3">
+                                        <label for="respuestaMotora4">3 - Flexión anormal</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" name="respuestaMotora" id="respuestaMotora5" value="2">
+                                        <label for="respuestaMotora5">2 - Extensión anormal</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" name="respuestaMotora" id="respuestaMotora6" value="1">
+                                        <label for="respuestaMotora6">1 - No responde</label>
+                                    </div>                                                                        
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-calculate" name="calcularG" id="calcularG">
+                            Calcular Glasgow
+                        </button>
+
+                        <br/>
+                        <a id="resultadosG"></a>                        
+                        <br/>
+                        <hr/>
+
+                        <h3 class="section-results">Resultados Glasgow</h3>
+
+                        <h5>Glasgow = Respuestas ocular + verbal + motora</h5>
+
+                        <table>
+                            <tr>
+                                <th>Ocular</th>
+                                <td>{{$respuestaOcular ?? ''}}</td>
+                            </tr>
+                            <tr>
+                                <th>Verbal</th>
+                                <td>{{$respuestaVerbal ?? ''}}</td>
+                            </tr>
+                            <tr>
+                                <th>Motora</th>
+                                <td>{{$respuestaMotora ?? ''}}</td>
+                            </tr>
+                            <tr>
+                                <th>Total</th>
+                                <td><b>{{$totalGlasgow ?? ''}}</b></td>
+                            </tr>
+
+                        </table>
+
+                        @if(isset($totalGlasgow))
+                            <script>
+                                window.location.hash = 'resultadosG';
+                            </script>
+                        @endif
+                    </form>
+                </div>
+
+                <br/>
+
+                <!-- Cuarta Sección: PAM -->
+                <div class="form-section" id="pam">
+                    <h2 class="section-title">
+                        Presión Arterial Media (PAM)
+                    </h2>
+
+                    <form method="POST" action="{{ route('calcularPAM') }}" id="formPAM">
+                        @csrf
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="sistole" class="form-label">Sístole*</label>
+                                    <input type="number" name="sistole" id="sistole" class="form-control" placeholder="Ej: 120" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="diastole" class="form-label">Diastole*</label>
+                                    <input type="number" name="diastole" id="diastole" class="form-control" placeholder="Ej: 80" required>
+                                </div>
+                            </div>                                
+
+                        </div>
+
+                        <button type="submit" class="btn btn-calculate" name="calcularPAM" id="calcularPAM">
+                            Calcular PAM
+                        </button>
+
+                        <br/>
+                        <a id="resultadosPAM"></a>                        
+                        <br/>
+                        <hr/>
+
+                        <h3 class="section-results">Resultados PAM</h3>
+
+                        <h5>PAM = ( Sístole + (2 * Diastole) ) / 3</h5>
+
+                        <table>
+                            <tr>
+                                <th>Sístole</th>
+                                <td>{{$sistole ?? ''}} milímetros de mercurio (mmHg)</td>
+                            </tr>
+                            <tr>
+                                <th>Diastole</th>
+                                <td>{{$diastole ?? ''}} milímetros de mercurio (mmHg)</td>
+                            </tr>
+                            <tr>
+                                <th>PAM</th>
+                                <td><b>{{$pam ?? ''}} milímetros de mercurio (mmHg)</b></td>
+                            </tr>
+                        </table>
+
+                        @if(isset($pam))
+                            <script>
+                                window.location.hash = 'resultadosPAM';
+                            </script>
+                        @endif
+                    </form>
+                </div> 
 
             </div>
         </div>
